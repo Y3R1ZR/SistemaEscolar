@@ -77,11 +77,11 @@ button.primary {
   width:100%; border-collapse:collapse; margin-top:12px;
 }
 .table th {
-  background: linear-gradient(90deg,#f1f5f9,#fff);
-  text-align:left; padding:10px; font-size:13px; color:#0b1220;
+  background: linear-gradient(90deg,#3b82f6,#06b6d4);
+  text-align: center; padding:10px; font-size:13px; color:#20110b;
 }
 .table td { padding:10px; border-bottom:1px solid #f1f5f9; font-size:14px; color:#334155; vertical-align:middle; }
-.table tr:hover td { background:#0077fe83; }
+.table tr:hover td { background:#06bfe0; }
 
 /* actions */
 .actions a, .actions button { margin-right:8px; text-decoration:none; display:inline-block; padding:6px 10px; border-radius:8px; font-size:13px; }

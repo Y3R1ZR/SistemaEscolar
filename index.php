@@ -39,7 +39,7 @@
         <div class="card stats">
           <div class="stat-item">
             <h3>Guía rápida</h3> <br>
-            <p>Agregar / Editar / Eliminar alumnos y grupos. Asignar alumnos a grupos y registrar asistencias por fecha.</p>
+            <p style=" overflow-wrap: break-word; text-align: justify;">Sistema esta diseñado para asignar alumnos a grupos y registrar asistencias por fecha en apoyo a el control docente.</p>
           </div>
         </div>
       </aside>

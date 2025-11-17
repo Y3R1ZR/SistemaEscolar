@@ -42,7 +42,7 @@ $res = $stmt->get_result();
     </div>
 
     <aside class="card">
-      <div class="stat-item"><h3>Total</h3><p><?php echo $conn->query("SELECT COUNT(*) AS t FROM grupos")->fetch_assoc()['t']; ?></p></div>
+      <div class="stat-item"><h3> Grupos Totales</h3><p><?php echo $conn->query("SELECT COUNT(*) AS t FROM grupos")->fetch_assoc()['t']; ?></p></div>
     </aside>
   </div>
 </div>

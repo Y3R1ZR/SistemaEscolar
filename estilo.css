@@ -94,9 +94,9 @@ button.primary {
 
 /* right panel small stats */
 .stats { display:flex; flex-direction:column; gap:10px; }
-.stat-item { background:linear-gradient(90deg,#fff,#fbfdff); padding:12px; border-radius:10px; box-shadow:0 4px 12px rgba(2,6,23,0.04); }
-.stat-item h3 { font-size:20px; color:#0b1220; }
-.stat-item p { color:#475569; font-size:13px; }
+.stat-item { background:linear-gradient(90deg,#fff,#fbfdff); padding:40px; border-radius:10px; box-shadow:0 4px 12px rgba(2,6,23,0.04);}
+.stat-item h3 { font-size:25px; color:#0b1220; text-align: center; }
+.stat-item p { color:#475569; font-size:20px; text-align: center; }
 
 /* responsive */
 @media (max-width:1000pax) {

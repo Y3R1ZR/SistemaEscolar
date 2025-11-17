@@ -28,9 +28,9 @@
 
     <div class="grid">
       <div class="card">
-        <h2>Bienvenido</h2> <br>
-        <p>Desde aquí puedes administrar alumnos, crear/editar grupos, asignar alumnos y registrar asistencias.</p>
-        <div style="margin-top:14px">
+        <h2>👋 Bienvenido Docente 👋</h2> <br>
+        <p style =" overflow-wrap: break-word; text-align: justify;">Este sistema esta diseñado para apoyar al control de alumnos universitarios de la UNAM, enfocado al público docente de cualquier diciplina; los cuales podran asignar alumnos a sus grupos a impartir, registrar asistencias por fecha, contabilizar faltas, clasificarlos por grupos y muchas funciones más, diviertete y explora todo su pontencial <strong> ¡¡¡ Mucho Éxito 😋 !!!</strong></p>
+        <div style="margin-top:16px">
           <a class="nav" href="listar_alumnos.php"><div class="button-ghost">Ir a Alumnos</div></a>
         </div>
       </div>
@@ -38,8 +38,8 @@
       <aside>
         <div class="card stats">
           <div class="stat-item">
-            <h3>Guía rápida</h3> <br>
-            <p style=" overflow-wrap: break-word; text-align: justify;">Sistema esta diseñado para asignar alumnos a grupos y registrar asistencias por fecha en apoyo a el control docente.</p>
+            <h3>Información Necesaria del Alumno:</h3> <br>
+            <p2> Número de cuenta, Nombre completo, Clave del grupo, Periodo escolar , Carrera, Semestre y Materia a impartir</p2>
           </div>
         </div>
       </aside>

@@ -81,7 +81,7 @@ button.primary {
   text-align:left; padding:10px; font-size:13px; color:#0b1220;
 }
 .table td { padding:10px; border-bottom:1px solid #f1f5f9; font-size:14px; color:#334155; vertical-align:middle; }
-.table tr:hover td { background:#fbfdff; }
+.table tr:hover td { background:#0077fe83; }
 
 /* actions */
 .actions a, .actions button { margin-right:8px; text-decoration:none; display:inline-block; padding:6px 10px; border-radius:8px; font-size:13px; }
@@ -96,6 +96,6 @@ button.primary {
 .stat-item p { color:#475569; font-size:13px; }
 
 /* responsive */
-@media (max-width:1000px) {
+@media (max-width:1000pax) {
   .grid { grid-template-columns: 1fr; }
 }

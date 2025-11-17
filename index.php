@@ -28,7 +28,7 @@
 
     <div class="grid">
       <div class="card">
-        <h2>Bienvenido</h2>
+        <h2>Bienvenido</h2> <br>
         <p>Desde aquí puedes administrar alumnos, crear/editar grupos, asignar alumnos y registrar asistencias.</p>
         <div style="margin-top:14px">
           <a class="nav" href="listar_alumnos.php"><div class="button-ghost">Ir a Alumnos</div></a>
@@ -38,7 +38,7 @@
       <aside>
         <div class="card stats">
           <div class="stat-item">
-            <h3>Guía rápida</h3>
+            <h3>Guía rápida</h3> <br>
             <p>Agregar / Editar / Eliminar alumnos y grupos. Asignar alumnos a grupos y registrar asistencias por fecha.</p>
           </div>
         </div>

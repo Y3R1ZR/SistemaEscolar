@@ -19,8 +19,8 @@ $res = $stmt->get_result();
       <div><h1>Alumnos</h1><small style="color:#64748b">Agregar · Editar · Eliminar · Orden alfabético</small></div>
     </div>
     <div class="nav">
-      <a href="index.php">Inicio</a>
-      <a href="agregar_alumno.php" class="button-ghost">+ Agregar alumno</a>
+      <a href="index.php"> 🏠 Inicio</a>
+      <a href="agregar_alumno.php" class="button-ghost">&#9989; Agregar alumno</a>
     </div>
   </div>
 
@@ -41,8 +41,8 @@ $res = $stmt->get_result();
             <td><?= htmlspecialchars($row['correo']) ?></td>
      
             <td class="actions">
-              <a class="edit" href="editar_alumno.php?matricula=<?= urlencode($row['matricula']) ?>">Editar</a>
-              <a class="delete" href="eliminar_alumno.php?matricula=<?= urlencode($row['matricula']) ?>" onclick="return confirm('Eliminar alumno <?= htmlspecialchars($row['nombre']) ?>?')">Eliminar</a>
+              <a class="edit" href="editar_alumno.php?matricula=<?= urlencode($row['matricula']) ?>">✏️Editar</a> <br>
+              <a class="delete" href="eliminar_alumno.php?matricula=<?= urlencode($row['matricula']) ?>" onclick="return confirm('Eliminar alumno <?= htmlspecialchars($row['nombre']) ?>?')">🗑️Eliminar</a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -52,14 +52,14 @@ $res = $stmt->get_result();
 
     <aside class="card">
       <div class="stat-item">
-        <h3>Total de alumnos</h3>
+        <h3>Total de alumnos</h3> <br>
         <?php
           $c = $conn->query("SELECT COUNT(*) AS total FROM alumnos")->fetch_assoc();
           echo "<p>{$c['total']}</p>";
         ?>
       </div>
       <div style="margin-top:12px">
-        <a class="button-ghost" href="index.php">Volver</a>
+        <a class="button-ghost" href="index.php">&#8617; Volver</a>
       </div>
     </aside>
   </div>

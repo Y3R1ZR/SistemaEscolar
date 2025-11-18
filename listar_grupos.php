@@ -15,7 +15,7 @@ $res = $stmt->get_result();
 <div class="container">
   <div class="header">
     <div class="brand"><div class="logo">GR</div><div><h1>Grupos</h1></div></div>
-    <div class="nav"><a href="index.php">Inicio</a><a class="button-ghost" href="agregar_grupo.php">+ Nuevo grupo</a><a href="alumno_grupo.php">Asignar alumnos</a></div>    
+    <div class="nav"><a href="index.php"> 🏠 Inicio</a><a class="button-ghost" href="agregar_grupo.php">&#9989; Nuevo grupo</a><a href="alumno_grupo.php"> &#9989; Asignar alumnos</a></div>    
   </div>
 
   <div class="grid">
@@ -31,9 +31,9 @@ $res = $stmt->get_result();
             <td><?= htmlspecialchars($row['semestre']) ?></td>
             <td><?= htmlspecialchars($row['carrera']) ?></td>
             <td class="actions">
-              <a class="edit" href="editar_grupo.php?id=<?= $row['id_grupo'] ?>">Editar</a>
-              <a class="delete" href="eliminar_grupo.php?id=<?= $row['id_grupo'] ?>" onclick="return confirm('Eliminar grupo?')">Eliminar</a>
-              <a class="assign" href="ver_materia.php?id=<?= $row['id_grupo'] ?>">Ver</a>
+              <a class="edit" href="editar_grupo.php?id=<?= $row['id_grupo'] ?>">✏️Editar</a>
+              <a class="delete" href="eliminar_grupo.php?id=<?= $row['id_grupo'] ?>" onclick="return confirm('Eliminar grupo?')">🗑️Eliminar</a>
+              <a class="assign" href="ver_materia.php?id=<?= $row['id_grupo'] ?>">👀Ver</a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -42,7 +42,7 @@ $res = $stmt->get_result();
     </div>
 
     <aside class="card">
-      <div class="stat-item"><h3> Grupos Totales</h3><p><?php echo $conn->query("SELECT COUNT(*) AS t FROM grupos")->fetch_assoc()['t']; ?></p></div>
+      <div class="stat-item"><h3> Grupos Totales</h3> <br> <p><?php echo $conn->query("SELECT COUNT(*) AS t FROM grupos")->fetch_assoc()['t']; ?></p></div>
     </aside>
   </div>
 </div>

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="container">
-  <div class="header"><div class="brand"><div class="logo">+G</div><div><h1>Agregar Grupo</h1></div></div><div class="nav"><a href="listar_grupos.php">Volver</a></div></div>
+  <div class="header"><div class="brand"><div class="logo">+AG</div><div><h1>Agregar Grupo</h1></div></div><div class="nav"><a href="listar_grupos.php"> &#8617; Volver</a></div></div>
 
   <div class="grid">
     <div class="card">
@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div><label>Semestre</label><input type="text" name="semestre"></div>
         <div><label>Carrera</label><input type="text" name="carrera"></div>
         <div style="grid-column:span 2; display:flex; gap:8px; justify-content:flex-end">
-          <button class="primary" type="submit">Guardar</button>
-          <a class="button-ghost" href="listar_grupos.php">Cancelar</a>
+          <button class="primary" type="submit">&#128190;Guardar</button>
+          <a class="button-ghost" href="listar_grupos.php">&#128683;Cancelar</a>
         </div>
       </form>
     </div>
 
-    <aside class="card"><div class="stat-item"><h3>Nota</h3><p>Clave única por grupo.</p></div></aside>
+    <aside class="card"><div class="stat-item"><h3>Nota</h3><br><p>Clave única por grupo.</p></div></aside>
   </div>
 </div>
 </body>

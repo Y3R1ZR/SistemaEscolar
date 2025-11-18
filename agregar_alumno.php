@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
   <div class="header">
     <div class="brand"><div class="logo">+A</div><div><h1>Agregar Alumno</h1></div></div>
-    <div class="nav"><a href="listar_alumnos.php">Volver</a></div>
+    <div class="nav"><a href="listar_alumnos.php"> &#8617; Volver</a></div>
   </div>
 
   <div class="grid">
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <aside class="card">
       <div class="stat-item">
-        <h3>Consejo</h3>
+        <h3>Consejo</h3> <br>
         <p>La matrícula es única (clave primaria). Asegúrate de no duplicarla.</p>
       </div>
     </aside>

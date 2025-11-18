@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <head><meta charset="utf-8"><title>Editar Grupo</title><link rel="stylesheet" href=" estilo.css"></head>
 <body>
 <div class="container">
-  <div class="header"><div class="brand"><div class="logo">EG</div><div><h1>Editar Grupo</h1></div></div><div class="nav"><a href="listar_grupos.php">Volver</a></div></div>
+  <div class="header"><div class="brand"><div class="logo">EG</div><div><h1>Editar Grupo</h1></div></div><div class="nav"><a href="listar_grupos.php">&#8617; Volver</a></div></div>
   <div class="grid">
     <div class="card">
       <?php if($msg): ?><div class="success"><?=htmlspecialchars($msg)?></div><?php endif; ?>
@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         <div><label>Semestre</label><input type="text" name="semestre" value="<?=htmlspecialchars($g['semestre'])?>"></div>
         <div><label>Carrera</label><input type="text" name="carrera" value="<?=htmlspecialchars($g['carrera'])?>"></div>
         <div style="grid-column:span 2; display:flex; gap:8px; justify-content:flex-end">
-          <button class="primary" type="submit">Guardar</button>
-          <a class="button-ghost" href="listar_grupos.php">Cancelar</a>
+          <button class="primary" type="submit"> &#128190; Guardar</button>
+          <a class="button-ghost" href="listar_grupos.php">&#128683; Cancelar</a>
         </div>
       </form>
     </div>
 
-    <aside class="card"><div class="stat-item"><h3>Clave</h3><p>No cambies la clave si ya tiene alumnos asignados a ese grupo (puedes, pero se recomienda revisar asignaciones).</p></div></aside>
+    <aside class="card"><div class="stat-item"><h3>Clave</h3> <br> <p>No cambies la clave si ya tiene alumnos asignados a ese grupo (puedes, pero se recomienda revisar asignaciones).</p></div></aside>
   </div>
 </div>
 </body>

@@ -19,10 +19,10 @@
         </div>
       </div>
       <div class="nav">
-        <a href="listar_alumnos.php">Alumnos</a>
-        <a href="listar_grupos.php">Grupos</a>
-        <a href="ver_asistencias.php">Asistencias</a>
-        <a href="horario.php">Horarios</a>
+        <a href="listar_alumnos.php"> 👩‍🎓 Alumnos</a>
+        <a href="listar_grupos.php"> 📘 Grupos</a>
+        <a href="ver_asistencias.php"> 🗓️ Asistencias</a>
+        <a href="horario.php"> 🔔 Horarios</a>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
         <h2>👋 Bienvenido Docente 👋</h2> <br>
         <p style =" overflow-wrap: break-word; text-align: justify;">Este sistema esta diseñado para apoyar al control de alumnos universitarios de la UNAM, enfocado al público docente de cualquier diciplina; los cuales podran asignar alumnos a sus grupos a impartir, registrar asistencias por fecha, contabilizar faltas, clasificarlos por grupos y muchas funciones más, diviertete y explora todo su pontencial <strong> ¡¡¡ Mucho Éxito 😋 !!!</strong></p>
         <div style="margin-top:16px">
-          <a class="nav" href="listar_alumnos.php"><div class="button-ghost">Ir a Alumnos</div></a>
+          <a class="nav" href="listar_alumnos.php"><div class="button-ghost"> &#8618; Ir a Alumnos</div></a>
         </div>
       </div>
 

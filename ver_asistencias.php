@@ -13,8 +13,8 @@ $grupos = $conn->query("SELECT id_grupo, clave_grupo, materia FROM grupos ORDER 
 <body>
 <div class="container">
   <div class="header">
-    <div class="brand"><div class="logo">VA</div><div><h1>Asistencias</h1></div></div>
-    <div class="nav"><a href="index.php">Inicio</a><a class="button-ghost" href="registrar_asistencia.php">Registrar</a></div>
+    <div class="brand"><div class="logo">AS</div><div><h1>Asistencias</h1></div></div>
+    <div class="nav"><a href="index.php"> 🏠 Inicio</a><a class="button-ghost" href="registrar_asistencia.php"> &#9989; Registrar</a></div>
   </div>
 
   <div class="card">
@@ -33,7 +33,7 @@ $grupos = $conn->query("SELECT id_grupo, clave_grupo, materia FROM grupos ORDER 
         <input type="date" name="fecha" value="<?=htmlspecialchars($filtro_fecha)?>">
       </div>
       <div style="grid-column:span 2; display:flex; justify-content:flex-end">
-        <button class="primary" type="submit">Filtrar</button>
+        <button class="primary" type="submit">&#9660; Filtrar</button>
         
       </div>
     </form>

@@ -127,8 +127,8 @@ if ($sel_id_grupo > 0) {
       <div><h1>Registrar Asistencia</h1></div>
     </div>
     <div class="nav">
-      <a href="index.php">Inicio</a>
-      <a href="ver_asistencias.php" class="button-ghost">Ver asistencias</a>
+      <a href="index.php"> 🏠 Inicio</a>
+      <a href="ver_asistencias.php" class="button-ghost"> 🗓️ Ver asistencias</a>
     </div>
   </div>
 

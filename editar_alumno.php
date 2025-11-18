@@ -61,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div><label>Correo</label><input type="email" name="correo" value="<?= htmlspecialchars($al['correo']) ?>"></div>
         
         <div style="grid-column:span 2; display:flex; gap:8px; justify-content:flex-end">
-          <button class="primary" type="submit">Guardar cambios</button>
-          <a class="button-ghost" href="listar_alumnos.php">Cancelar</a>
+          <button class="primary" type="submit">&#128190;Guardar cambios</button>
+          <a class="button-ghost" href="listar_alumnos.php">&#128683;Cancelar</a>
         </div>
       </form>
     </div>

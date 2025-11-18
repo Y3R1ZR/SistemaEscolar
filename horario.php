@@ -115,7 +115,7 @@ $stmt->close();
       </div>
 
       <div style="display:flex;align-items:end;gap:8px">
-        <button type="submit" class="primary">Filtrar</button>
+        <button type="submit" class="primary">&#9660; Filtrar</button>
         <a href="horario.php" class="ghost" style="display:inline-block;padding:8px 12px;border-radius:8px">Limpiar</a>
       </div>
     </form>
@@ -156,8 +156,8 @@ $stmt->close();
                 <td><?= htmlspecialchars($h['materia']) ?> <span class="small">(<?= htmlspecialchars($h['periodo']) ?>)</span></td>
                 <td style="text-align:center">
                   <div class="actions">
-                    <a class="btn-edit" href="editar_horario.php?id=<?= $h['id_horario'] ?>">Editar</a>
-                    <a class="btn-delete" href="eliminar_horario.php?id=<?= $h['id_horario'] ?>" onclick="return confirm('Eliminar horario?')">Eliminar</a>
+                    <a class="btn-edit" href="editar_horario.php?id=<?= $h['id_horario'] ?>">✏️ Editar</a>
+                    <a class="btn-delete" href="eliminar_horario.php?id=<?= $h['id_horario'] ?>" onclick="return confirm('Eliminar horario?')"> 🗑️ Eliminar</a>
                   </div>
                 </td>
               </tr>
@@ -216,7 +216,7 @@ $stmt->close();
         </div>
 
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-          <button type="submit" class="primary">Guardar horario</button>
+          <button type="submit" class="primary"> &#128190; Guardar horario</button>
         </div>
       </form>
 

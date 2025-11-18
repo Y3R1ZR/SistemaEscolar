@@ -77,8 +77,8 @@ $total_grupos = $conn->query("SELECT COUNT(*) AS t FROM grupos")->fetch_assoc()[
             <div><h1>Asignar Alumno a Grupo</h1></div>
         </div>
         <div class="nav">
-            <a href="index.php">Inicio</a>
-            <a href="listar_grupos.php">Volver</a> 
+            <a href="index.php">🏠 Inicio</a>
+            <a href="listar_grupos.php">&#8617; Volver</a> 
         </div>
     </div>
     

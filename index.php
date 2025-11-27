@@ -23,6 +23,7 @@
         <a href="listar_grupos.php"> 📘 Grupos</a>
         <a href="ver_asistencias.php"> 🗓️ Asistencias</a>
         <a href="horario.php"> 🔔 Horarios</a>
+        <a href="lista_grupo.php"> 📘 Grupos</a>
       </div>
     </div>
 

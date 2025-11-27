@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lista de Grupo - Sistema Profesor</title>
+<style>
+/* === estilos in-file (minimalista azul/blanco) === */
+*{box-sizing:border-box;font-family:Inter, Roboto, Arial, sans-serif}
+body{margin:0;background:#f5f7fb;color:#1f2937}
+.app{display:grid;grid-template-columns:240px 1fr 360px;gap:18px;padding:18px;min-height:100vh}
+.sidebar{background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 18px rgba(23,43,77,0.06)}
+.right-panel{background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 18px rgba(23,43,77,0.06)}
+.main{display:flex;flex-direction:column}
+.main-header{background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 18px rgba(23,43,77,0.04);margin-bottom:8px}
+.content{background:#fff;padding:12px;border-radius:12px;box-shadow:0 4px 18px rgba(23,43,77,0.03)}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px;border-bottom:1px solid #eef2f8;text-align:left}
+th{background:#f1f5f9;font-weight:600}
+.muted{color:#6b7280}
+.small{font-size:12px}
+.btn{padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;cursor:pointer}
+.btn.primary{background:#0b62d9;color:#fff;border-color:#0b62d9}
+.filter label{display:block;margin-top:10px;margin-bottom:6px;font-weight:600}
+.filter select, .scale-box input[type="number"], .scale-box input[type="text"]{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf6;background:#fbfdff}
+.scale-box{display:flex;flex-direction:column;gap:8px}
+.scale-actions{display:flex;gap:8px;margin-top:8px}
+input[type="text"]{padding:6px;border-radius:6px;border:1px solid #e6edf6}
+.right-panel h3{margin-top:0}
+.center{display:flex;gap:8px;align-items:center}
+.small-muted{font-size:12px;color:#6b7280}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar: filtros -->
+  <aside class="sidebar">
+    <h2>Filtros</h2>
+    <div class="filter">
+      <label for="periodo">Periodo</label>
+      <select id="periodo"><option value="">Cargando...</option></select>
+
+      <label for="grupo">Grupo</label>
+      <select id="grupo" disabled><option value="">-- Elige periodo --</option></select>
+
+      <div style="margin-top:12px">
+        <button id="btn-cargar" class="btn primary" disabled>Cargar lista</button>
+        <button id="btn-csv" class="btn" title="Exportar CSV" disabled>Exportar CSV</button>
+      </div>
+      <div style="margin-top:12px" class="small-muted">Selecciona periodo y grupo para ver la lista.</div>
+    </div>
+  </aside>
+
+  <!-- Main: tabla -->
+  <main class="main">
+    <header class="main-header"><h1>Lista general de grupo</h1></header>
+    <section class="content">
+      <div class="table-wrap">
+        <table id="tabla">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Matrícula</th>
+              <th>Apellido Paterno</th>
+              <th>Apellido Materno</th>
+              <th>Nombre</th>
+              <th>Tareas</th>
+              <th>Faltas</th>
+              <th>% Asist.</th>
+              <th>Asist. (0-10)</th>
+              <th>Prom. Exámenes</th>
+              <th>Prefinal (calc)</th>
+              <th>Prefinal (editar)</th>
+              <th>Final (editar)</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Right panel: porcentajes y total clases -->
+  <aside class="right-panel">
+    <h3>Información de grupo</h3>
+    <div class="scale-box">
+      <input type="hidden" id="id_grupo">
+      <div>
+        <label>Total de clases (calculado automáticamente)</label>
+        <input type="text" id="total_clases" readonly value="0">
+        <div class="small-muted">Se obtiene del conteo en la tabla <code>clases</code> o de registros en <code>asistencias</code>.</div>
+      </div>
+
+      <label>% Tareas</label>
+      <input type="number" id="pct_tareas" min="0" max="100" value="0">
+
+      <label>% Asist.</label>
+      <input type="number" id="pct_asist" min="0" max="100" value="0">
+
+      <label>% Exámenes</label>
+      <input type="number" id="pct_exams" min="0" max="100" value="0">
+
+      <div class="center">
+        <button id="guardar_pct" class="btn primary" disabled>Guardar escala</button>
+        <button id="recalcular" class="btn" disabled>Recalcular prefinales</button>
+      </div>
+
+      <div id="msg" class="small-muted" style="margin-top:8px"></div>
+    </div>
+  </aside>
+</div>
+
+<!-- === Script: JS con llamadas AJAX a los endpoints PHP === -->
+<script>
+/* lista_grupo.html - Frontend */
+const el = id => document.getElementById(id);
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  cargarPeriodos();
+
+  el('periodo').addEventListener('change', ()=> cargarGrupos(el('periodo').value));
+  el('grupo').addEventListener('change', ()=>{
+    const g = el('grupo').value;
+    el('guardar_pct').disabled = !g;
+    el('recalcular').disabled = !g;
+    el('btn-cargar').disabled = !g;
+    el('btn-csv').disabled = !g;
+    if (g) {
+      el('id_grupo').value = g;
+      cargarInfoGrupo(g);
+    } else {
+      el('id_grupo').value = '';
+      el('total_clases').value = '0';
+    }
+  });
+
+  el('btn-cargar').addEventListener('click', ()=> cargarAlumnos(el('grupo').value));
+  el('guardar_pct').addEventListener('click', guardarPorcentajes);
+  el('recalcular').addEventListener('click', recalcularPrefinales);
+  el('btn-csv').addEventListener('click', exportCSV);
+});
+
+/* Helper fetch POST */
+async function postJSON(url, bodyObj) {
+  const resp = await fetch(url, {method:'POST', body: new URLSearchParams(bodyObj)});
+  return resp.json();
+}
+
+/* Cargar periodos (obtener_grupos.php retornará puede devolver periodos únicos en otro endpoint; aquí usamos obtener_grupos para listar periodos disponibles) */
+async function cargarPeriodos(){
+  // Endpoint devuelve listados de periodos distintos
+  try {
+    const res = await postJSON('obtener_grupos.php', {action:'periodos'});
+    if (res.error) {
+      alert(res.error);
+      return;
+    }
+    const periodos = res.periodos || [];
+    let html = '<option value="">-- Selecciona periodo --</option>';
+    periodos.forEach(p => html += `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`);
+    el('periodo').innerHTML = html;
+    el('grupo').innerHTML = '<option value="">-- Elige periodo --</option>';
+    el('grupo').disabled = true;
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+/* Cargar grupos por periodo */
+async function cargarGrupos(periodo){
+  if (!periodo) { el('grupo').innerHTML = '<option value="">-- Elige periodo --</option>'; el('grupo').disabled=true; return; }
+  try {
+    const res = await postJSON('obtener_grupos.php', {action:'grupos', periodo});
+    if (res.error) { alert(res.error); return; }
+    let html = '<option value="">-- Selecciona grupo --</option>';
+    res.grupos.forEach(g => {
+      html += `<option value="${g.id_grupo}">${escapeHtml(g.clave_grupo)} - ${escapeHtml(g.materia)}</option>`;
+    });
+    el('grupo').innerHTML = html;
+    el('grupo').disabled = false;
+  } catch(e) { console.error(e); }
+}
+
+/* Cargar info del grupo: porcentajes y total_clases (desde clases o asistencia) */
+async function cargarInfoGrupo(id_grupo){
+  try {
+    const res = await postJSON('obtener_asistencias.php', {id_grupo});
+    if (res.error) { el('msg').textContent = res.error; return; }
+    el('total_clases').value = res.total_clases || 0;
+    // cargar porcentajes
+    const pct = await postJSON('obtener_calificaciones.php', {action:'fetch_pct', id_grupo});
+    if (pct.success) {
+      el('pct_tareas').value = pct.porcentaje_tareas;
+      el('pct_asist').value = pct.porcentaje_asistencias;
+      el('pct_exams').value = pct.porcentaje_examenes;
+    } else {
+      el('pct_tareas').value = 0; el('pct_asist').value = 0; el('pct_exams').value = 0;
+    }
+  } catch(e) { console.error(e); }
+}
+
+/* Cargar alumnos y cálculos (usa obtener_alumnos_grupo.php y obtener_calificaciones.php) */
+async function cargarAlumnos(id_grupo){
+  el('body').innerHTML = '<tr><td colspan="14">Cargando...</td></tr>';
+  try {
+    const res = await postJSON('obtener_alumnos_grupo.php', {id_grupo});
+    if (res.error) { el('body').innerHTML = `<tr><td colspan="14">${escapeHtml(res.error)}</td></tr>`; return; }
+    const alumnos = res.alumnos || [];
+    // obtenemos tota clases para el grupo
+    const tcls = await postJSON('obtener_asistencias.php', {id_grupo});
+    const total_clases = parseInt(tcls.total_clases) || 0;
+    // obtenemos porcentajes guardados
+    const pct = await postJSON('obtener_calificaciones.php', {action:'fetch_pct', id_grupo});
+    const pt = pct.success ? Number(pct.porcentaje_tareas) : 0;
+    const pa = pct.success ? Number(pct.porcentaje_asistencias) : 0;
+    const pe = pct.success ? Number(pct.porcentaje_examenes) : 0;
+
+    if (alumnos.length === 0) {
+      el('body').innerHTML = '<tr><td colspan="14">No hay alumnos en este grupo.</td></tr>'; return;
+    }
+
+    let html = '';
+    let idx = 1;
+    for (const al of alumnos) {
+      // para cada alumno pedimos datos de tareas/exams/faltas via endpoint (o podríamos pedir en batch)
+      // pedimos batch por alumno
+      const calc = await postJSON('obtener_calificaciones.php', {action:'alumno', id_grupo, matricula: al.matricula});
+      if (calc.error) {
+        html += `<tr><td colspan="14">Error al obtener datos para ${escapeHtml(al.matricula)}</td></tr>`;
+        continue;
+      }
+      const tasks_total = calc.tareas_total || 0;
+      const faltas = calc.faltas || 0;
+      const prom_exams = Number(calc.prom_exams || 0).toFixed(2);
+      const pct_asist = Number(calc.porcentaje_asistencia || 0).toFixed(2);
+      // convertir porcentaje asistencia (0-100) a escala 0-10
+      const asist_0_10 = (Number(pct_asist) / 100 * 10);
+      const asist_0_10_fmt = asist_0_10.toFixed(2);
+      // prefinal calculada por backend (calc.prefinal_calc) con truncado a 2 decimales
+      const prefinal_calc = calc.prefinal_calc || '0.00';
+      const prefinal_saved = calc.prefinal_saved !== null ? Number(calc.prefinal_saved).toFixed(2) : '';
+      const final_saved = calc.final_saved !== null ? Number(calc.final_saved).toFixed(2) : '';
+
+      html += `<tr>
+        <td>${idx++}</td>
+        <td>${escapeHtml(al.matricula)}</td>
+        <td>${escapeHtml(al.apellido_paterno)}</td>
+        <td>${escapeHtml(al.apellido_materno)}</td>
+        <td>${escapeHtml(al.nombre)}</td>
+        <td style="text-align:center">${tasks_total}</td>
+        <td style="text-align:center">${faltas}</td>
+        <td style="text-align:center">${pct_asist}%</td>
+        <td style="text-align:center">${asist_0_10_fmt}</td>
+        <td style="text-align:center">${prom_exams}</td>
+        <td style="text-align:center">${prefinal_calc}</td>
+        <td style="text-align:center"><input data-mat="${al.matricula}" class="inp-pref" size="5" value="${prefinal_saved !== '' ? prefinal_saved : prefinal_calc}"></td>
+        <td style="text-align:center"><input data-mat="${al.matricula}" class="inp-final" size="5" value="${final_saved !== '' ? final_saved : ''}"></td>
+        <td style="text-align:center"><button class="btn-save btn">Guardar</button></td>
+      </tr>`;
+    }
+
+    el('body').innerHTML = html;
+
+    // attach save handlers
+    document.querySelectorAll('.btn-save').forEach((b, i) => {
+      b.addEventListener('click', async function(){
+        const row = this.closest('tr');
+        const mat = row.querySelector('.inp-pref').getAttribute('data-mat') || row.querySelector('.inp-final').getAttribute('data-mat');
+        const pre = row.querySelector('.inp-pref').value.trim();
+        const fin = row.querySelector('.inp-final').value.trim();
+        const payload = {matricula: mat, id_grupo: el('id_grupo').value};
+        if (pre !== '') payload.prefinal = pre;
+        if (fin !== '') payload.final = fin;
+        const res = await postJSON('guardar_calificaciones.php', payload);
+        if (res.success) {
+          this.textContent = 'Guardado'; setTimeout(()=> this.textContent = 'Guardar', 1200);
+        } else {
+          alert('Error al guardar');
+        }
+      });
+    });
+
+  } catch(e) {
+    console.error(e);
+    el('body').innerHTML = '<tr><td colspan="14">Error al cargar la lista.</td></tr>';
+  }
+}
+
+/* Guardar porcentajes */
+async function guardarPorcentajes(){
+  const idg = el('id_grupo').value;
+  const pt = Number(el('pct_tareas').value) || 0;
+  const pa = Number(el('pct_asist').value) || 0;
+  const pe = Number(el('pct_exams').value) || 0;
+  if ((pt + pa + pe) !== 100) { el('msg').textContent = 'Los porcentajes deben sumar 100.'; return; }
+  const res = await postJSON('guardar_porcentajes.php', {id_grupo:idg, por_tareas:pt, por_asist:pa, por_exams:pe});
+  if (res.success) { el('msg').textContent = 'Guardado.'; cargarAlumnos(idg); }
+  else el('msg').textContent = res.error || 'Error al guardar';
+}
+
+/* Recalcular prefinales (y almacenar prefiales) */
+async function recalcularPrefinales(){
+  if (!confirm('Recalcular prefinales (esto sobrescribirá calificacion_prefinal calculada)?')) return;
+  const idg = el('id_grupo').value;
+  const res = await postJSON('calcular_prefinal.php', {id_grupo: idg});
+  if (res.success) { el('msg').textContent = res.message || 'Prefinales recalculadas.'; cargarAlumnos(idg); }
+  else el('msg').textContent = res.error || 'Error';
+}
+
+/* Export CSV simple */
+async function exportCSV(){
+  // construye CSV a partir del DOM actual
+  let rows = [];
+  const headers = Array.from(document.querySelectorAll('#tabla thead th')).map(th => th.innerText.trim());
+  rows.push(headers.join(','));
+  document.querySelectorAll('#tabla tbody tr').forEach(tr => {
+    const cols = Array.from(tr.querySelectorAll('td')).map(td => td.innerText.replace(/,/g,''));
+    if (cols.length) rows.push(cols.join(','));
+  });
+  const csv = rows.join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `lista_grupo_${el('id_grupo').value || 'export'}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* Escape helper */
+function escapeHtml(str) {
+  if (!str && str !== 0) return '';
+  return String(str).replace(/[&<>"'`=\/]/g, function(s) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[s];
+  });
+}
+</script>
+</body>
+</html>
